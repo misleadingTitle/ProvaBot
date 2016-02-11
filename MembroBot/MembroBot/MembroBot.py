@@ -2,6 +2,7 @@ import sys
 import time
 import telepot
 
+from MembroLogic import containsKeyword
 """
 $ python2.7 skeleton.py <token>
 A skeleton for your telepot programs.
@@ -13,8 +14,10 @@ def handle(msg):
     # normal message
     if flavor == 'normal':
         content_type, chat_type, chat_id = telepot.glance(msg)
-        print 'Normal Message:', content_type, chat_type, chat_id
-
+        print 'Normal Message:', content_type, chat_type, chat_id, 
+        content = msg['text']
+        if containsKeyword(content):
+            bot.sendMessage(chat_id,content)
         # Do your stuff according to `content_type` ...
 
     # inline query - need `/setinline`
