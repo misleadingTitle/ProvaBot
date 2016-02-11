@@ -38,10 +38,12 @@ def handle(msg):
     else:
         raise telepot.BadFlavor(msg)
 
+f = open('./Values/Key.txt', 'r')
+key = f.read()
 
-TOKEN = sys.argv[1]  # get token from command-line
-
+TOKEN = key  # get token from command-line
 bot = telepot.Bot(TOKEN)
+
 bot.notifyOnMessage(handle)
 print 'Listening ...'
 
