@@ -1,12 +1,16 @@
 import sys
 import time
 import telepot
+import random
+import os
 
 from MembroLogic import containsKeyword
+
 """
 $ python2.7 skeleton.py <token>
 A skeleton for your telepot programs.
 """
+
 
 def handle(msg):
     flavor = telepot.flavor(msg)
@@ -14,11 +18,14 @@ def handle(msg):
     # normal message
     if flavor == 'normal':
         content_type, chat_type, chat_id = telepot.glance(msg)
-        print 'Normal Message:', content_type, chat_type, chat_id, 
+        print 'Normal Message:', content_type, chat_type, chat_id,
         content = msg['text']
         if containsKeyword(content):
-            bot.sendMessage(chat_id,content)
-        # Do your stuff according to `content_type` ...
+            bot.sendMessage(chat_id, content)
+            responseImg = random.choice(os.listdir("./Images/"))
+            responsefile = open("./Images/" + responseImg, 'rb')
+            bot.sendPhoto(chat_id, responsefile)
+            # Do your stuff according to `content_type` ...
 
     # inline query - need `/setinline`
     elif flavor == 'inline_query':
@@ -27,7 +34,7 @@ def handle(msg):
 
         # Compose your own answers
         articles = [{'type': 'article',
-                        'id': 'abc', 'title': 'ABC', 'message_text': 'Good morning'}]
+                     'id': 'abc', 'title': 'ABC', 'message_text': 'Good morning'}]
 
         bot.answerInlineQuery(query_id, articles)
 
@@ -40,6 +47,7 @@ def handle(msg):
 
     else:
         raise telepot.BadFlavor(msg)
+
 
 f = open('./Values/Key.txt', 'r')
 key = f.read()
